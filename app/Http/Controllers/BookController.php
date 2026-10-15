@@ -29,7 +29,16 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'author' => 'required|string',
+            'genre' => 'required|string',
+            'pages' => 'required|integer|min:1',
+        ]);
+
+        $book = Book::create($validated);
+
+        return response()->json($book, 201);
     }
 
     /**
@@ -37,7 +46,7 @@ class BookController extends Controller
      */
     public function show(string $id)
     {
-        //
+         return Book::findOrFail($id);
     }
 
     /**
@@ -45,7 +54,18 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $book = Book::findOrFail($id);
+
+    $validated = $request->validate([
+        'title' => 'required|string',
+        'author' => 'required|string',
+        'genre' => 'required|string',
+        'pages' => 'required|integer|min:1',
+    ]);
+
+    $book->update($validated);
+
+    return response()->json($book);
     }
 
     /**
@@ -53,6 +73,10 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $book = Book::findOrFail($id);
+
+    	$book->delete();
+
+   	return response()->noContent();
     }
 }

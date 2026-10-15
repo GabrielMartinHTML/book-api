@@ -9,10 +9,19 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Book::query();
+
+        foreach (['genre', 'author'] as $field) {
+            if ($request->query($field)) {
+                $query->where($field, $request->query($field));
+            }
+        }
+
+        return $query->get();
     }
+
 
     /**
      * Store a newly created resource in storage.

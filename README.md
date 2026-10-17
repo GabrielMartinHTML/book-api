@@ -1,58 +1,257 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Book API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Course:** CIT 3102 – Systems Integration and Architecture
+**Module:** 5 – Build an API
+**Partner 1:** De Leon, Gabriel Martin
+**Partner 2:** Vida, Stanlee Edgar
+**Section:** IT2E
+**Resource Chosen:** Book
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Project Setup
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+These instructions explain how to run the Book API from a fresh clone of the repository.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Prerequisites
 
-## Learning Laravel
+* PHP and Composer
+* Laravel Herd or another local PHP environment
+* Git
+* Bruno for API testing
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Installation
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+**Step 1: Clone the repository**
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <repository-url>
+cd book-api
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Replace `<repository-url>` with the actual URL of the Git repository.
 
-## Contributing
+**Step 2: Install dependencies**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+```
 
-## Code of Conduct
+**Step 3: Configure the environment**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Create a local environment file:
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+On Windows PowerShell, you can use:
 
-## License
+```powershell
+Copy-Item .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+**Step 4: Configure SQLite**
+
+Ensure that the `.env` file uses SQLite:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+Create the SQLite database file if it does not already exist:
+
+```powershell
+New-Item -ItemType File -Path database/database.sqlite
+```
+
+If the file already exists, do not recreate it.
+
+**Step 5: Run the database migrations**
+
+```bash
+php artisan migrate
+```
+
+This creates the database tables required by the application.
+
+**Step 6: Start the Laravel development server**
+
+```bash
+php artisan serve
+```
+
+The API will be available at:
+
+`http://127.0.0.1:8000`
+
+**Step 7: Test using Bruno**
+
+Use Bruno to send HTTP requests to the API. Register a user, log in, and copy the returned token. Use the token as a Bearer Token for protected endpoints.
+
+> Note: The repository must include the application code, migrations, and `routes/api.php`. Sanctum must be configured for API token authentication. Do not commit your personal `.env` file or real access tokens.
+
+---
+
+## Table
+
+The API provides nine routes for book management and authentication.
+
+| HTTP Verb | Path                | Description                                               | Token Required |
+| --------- | ------------------- | --------------------------------------------------------- | -------------- |
+| POST      | `/api/register`     | Register a new user and issue an API token                | No             |
+| POST      | `/api/login`        | Authenticate a user and issue an API token                | No             |
+| POST      | `/api/logout`       | Revoke the current access token                           | Yes            |
+| GET       | `/api/me`           | Return the authenticated user's information               | Yes            |
+| GET       | `/api/books`        | Retrieve all books; supports `genre` and `author` filters | Yes            |
+| POST      | `/api/books`        | Create a book                                             | Yes            |
+| GET       | `/api/books/{book}` | Retrieve a specific book by ID                            | Yes            |
+| PUT       | `/api/books/{book}` | Update a book by ID                                       | Yes            |
+| DELETE    | `/api/books/{book}` | Delete a book by ID                                       | Yes            |
+
+### Book Fields
+
+Each book contains the following fields:
+
+| Field    | Data Type |
+| -------- | --------- |
+| `title`  | String    |
+| `author` | String    |
+| `genre`  | String    |
+| `pages`  | Integer   |
+
+### Filtering Examples
+
+Retrieve all books:
+
+```http
+GET /api/books
+```
+
+Filter by genre:
+
+```http
+GET /api/books?genre=fiction
+```
+
+Filter by genre and author:
+
+```http
+GET /api/books?genre=fiction&author=Rizal
+```
+
+The API uses a whitelist of permitted filter fields: `genre` and `author`.
+
+---
+
+## Ten Screenshots of Step 6
+
+### Test 1 — Register a User
+
+**Request:** `POST /api/register`
+**Expected Status:** `201 Created`
+
+Screenshot: `screenshots/image1.png`
+
+![Test 1: Register a user](screenshots/image1.png)
+
+### Test 2 — Log In
+
+**Request:** `POST /api/login`
+**Expected Status:** `200 OK`
+
+Screenshot: `screenshots/image2.png`
+
+![Test 2: Log in](screenshots/image2.png)
+
+### Test 3 — Access Books Without a Token
+
+**Request:** `GET /api/books`
+**Authentication:** No Auth
+**Expected Status:** `401 Unauthorized`
+
+Screenshot: `screenshots/image3.png`
+
+![Test 3: Books without a token](screenshots/image3.png)
+
+### Test 4 — Access Books With a Token
+
+**Request:** `GET /api/books`
+**Authentication:** Bearer Token
+**Expected Status:** `200 OK`
+
+Screenshot: `screenshots/image4.png`
+
+![Test 4: Books with a token](screenshots/image4.png)
+
+### Test 5 — Create a Book
+
+**Request:** `POST /api/books`
+**Authentication:** Bearer Token
+**Expected Status:** `201 Created`
+
+Screenshot: `screenshots/image5.png`
+
+![Test 5: Create a book](screenshots/image5.png)
+
+### Test 6 — Create a Book With a Required Field Missing
+
+**Request:** `POST /api/books`
+**Authentication:** Bearer Token
+**Expected Status:** `422 Unprocessable Entity`
+
+Screenshot: `screenshots/image6.png`
+
+![Test 6: Missing required field](screenshots/image6.png)
+
+### Test 7 — Retrieve a Specific Book
+
+**Request:** `GET /api/books/1`
+**Authentication:** Bearer Token
+**Expected Status:** `200 OK`
+
+Screenshot: `screenshots/image7.png`
+
+![Test 7: Retrieve a book](screenshots/image7.png)
+
+### Test 8 — Retrieve a Nonexistent Book
+
+**Request:** `GET /api/books/99999`
+**Authentication:** Bearer Token
+**Expected Status:** `404 Not Found`
+
+Screenshot: `screenshots/image8.png`
+
+![Test 8: Book not found](screenshots/image8.png)
+
+### Test 9 — Update a Book
+
+**Request:** `PUT /api/books/1`
+**Authentication:** Bearer Token
+**Expected Status:** `200 OK`
+
+Screenshot: `screenshots/image9.png`
+
+![Test 9: Update a book](screenshots/image9.png)
+
+### Test 10 — Delete a Book
+
+**Request:** `DELETE /api/books/1`
+**Authentication:** Bearer Token
+**Expected Status:** `204 No Content`
+
+Screenshot: `screenshots/image10.png`
+
+![Test 10: Delete a book](screenshots/image10.png)
+
+---
+
+## 4. Why Does DELETE Return 204 Instead of 200?
+
+HTTP status codes tell the client what happened to its request. When a DELETE request returns `204 No Content`, it means the server successfully deleted the resource and has no additional response body to send. A `200 OK` response is also a success, but it is commonly used when the server returns information in the response body, such as a confirmation message.`204` clearly communicates that the deletion succeeded and there is no content to return.

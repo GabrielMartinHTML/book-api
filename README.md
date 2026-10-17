@@ -12,6 +12,7 @@
 
 **Resource Chosen:** Book
 
+---
 
 ## Project Setup
 

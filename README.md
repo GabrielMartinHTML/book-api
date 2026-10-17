@@ -1,11 +1,11 @@
 # Book API
 
-**Course:** CIT 3102 – Systems Integration and Architecture
-**Module:** 5 – Build an API
-**Partner 1:** De Leon, Gabriel Martin
-**Partner 2:** Vida, Stanlee Edgar
-**Section:** IT2E
-**Resource Chosen:** Book
+Course: CIT 3102 – Systems Integration and Architecture
+Module: 5 – Build an API
+De Leon, Gabriel Martin
+Vida, Stanlee Edgar
+Section: IT2E
+Resource Chosen: Book
 
 ---
 

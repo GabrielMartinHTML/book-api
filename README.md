@@ -157,7 +157,7 @@ The API uses a whitelist of permitted filter fields: `genre` and `author`.
 **Request:** `POST /api/register`
 **Expected Status:** `201 Created`
 
-Screenshot: `screenshots/image1.png`
+Screenshot:
 
 ![Test 1: Register a user](screenshots/image1.png)
 
@@ -166,7 +166,7 @@ Screenshot: `screenshots/image1.png`
 **Request:** `POST /api/login`
 **Expected Status:** `200 OK`
 
-Screenshot: `screenshots/image2.png`
+Screenshot:
 
 ![Test 2: Log in](screenshots/image2.png)
 
@@ -176,7 +176,7 @@ Screenshot: `screenshots/image2.png`
 **Authentication:** No Auth
 **Expected Status:** `401 Unauthorized`
 
-Screenshot: `screenshots/image3.png`
+Screenshot:
 
 ![Test 3: Books without a token](screenshots/image3.png)
 
@@ -186,7 +186,7 @@ Screenshot: `screenshots/image3.png`
 **Authentication:** Bearer Token
 **Expected Status:** `200 OK`
 
-Screenshot: `screenshots/image4.png`
+Screenshot:
 
 ![Test 4: Books with a token](screenshots/image4.png)
 
@@ -196,7 +196,7 @@ Screenshot: `screenshots/image4.png`
 **Authentication:** Bearer Token
 **Expected Status:** `201 Created`
 
-Screenshot: `screenshots/image5.png`
+Screenshot:
 
 ![Test 5: Create a book](screenshots/image5.png)
 
@@ -206,7 +206,7 @@ Screenshot: `screenshots/image5.png`
 **Authentication:** Bearer Token
 **Expected Status:** `422 Unprocessable Entity`
 
-Screenshot: `screenshots/image6.png`
+Screenshot:
 
 ![Test 6: Missing required field](screenshots/image6.png)
 
@@ -216,7 +216,7 @@ Screenshot: `screenshots/image6.png`
 **Authentication:** Bearer Token
 **Expected Status:** `200 OK`
 
-Screenshot: `screenshots/image7.png`
+Screenshot:
 
 ![Test 7: Retrieve a book](screenshots/image7.png)
 
@@ -226,7 +226,7 @@ Screenshot: `screenshots/image7.png`
 **Authentication:** Bearer Token
 **Expected Status:** `404 Not Found`
 
-Screenshot: `screenshots/image8.png`
+Screenshot:
 
 ![Test 8: Book not found](screenshots/image8.png)
 
@@ -236,7 +236,7 @@ Screenshot: `screenshots/image8.png`
 **Authentication:** Bearer Token
 **Expected Status:** `200 OK`
 
-Screenshot: `screenshots/image9.png`
+Screenshot:
 
 ![Test 9: Update a book](screenshots/image9.png)
 
@@ -246,7 +246,7 @@ Screenshot: `screenshots/image9.png`
 **Authentication:** Bearer Token
 **Expected Status:** `204 No Content`
 
-Screenshot: `screenshots/image10.png`
+Screenshot:
 
 ![Test 10: Delete a book](screenshots/image10.png)
 
